@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3 class="text-dark mb-4">Lecture Detail</h3>
+    <div class="card shadow mb-4 w-75">
+        <div class="card-body">
+            <div class="form-group mb-3 text-black">
+                <h5 class="text-primary">Name</h5>
+                {{ lecture.name }}
+            </div>
+            <div class="form-group mb-3 text-black">
+                <h5 class="text-primary">Description</h5>
+                {{ lecture.description }}
+            </div>
+            <div class="form-group mb-3">
+                <h5 class="text-primary">File</h5>
+                {% if lecture.file %}
+                    {{ lecture.file_name }}
+                    <a href="{{ lecture.file.url }}" target="_blank"  class="btn btn-primary">Open</a>
+                {% else %}
+                    No file
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="form-group mb-3 mt-3">
+                Added:
+                {{ lecture.timestamp }}
+            </div>
+            {% if user.is_teacher %}
+                <form method="post" action="{% url 'lecture_delete' lecture.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger w-100 mb-3" type="submit">
+                        DELETE
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

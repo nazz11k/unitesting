@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3 class="text-dark mb-4">Task Detail</h3>
+    <div class="card shadow mb-4 w-75">
+        <div class="card-body">
+            <div class="form-group">
+                <h5 class="text-primary">Name</h5>
+                {{ task.name }}
+            </div>
+            <div class="form-group">
+                <h5 class="text-primary">Description</h5>
+                {{ task.description }}
+            </div>
+            <div class="form-group">
+                <h5 class="text-primary">Max score</h5>
+                {{ task.max_score }}
+            </div>
+            <div class="form-group">
+                <h5 class="text-primary">Deadline</h5>
+                {{ task.deadline }}
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="form-group mb-3 mt-3">
+                Added:
+                {{ task.timestamp }}
+            </div>
+            {% if user.is_teacher %}
+                <form method="post" action="{% url 'task_delete' task.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger w-100 mb-3" type="submit">
+                        DELETE
+                    </button>
+                </form>
+            {% endif %}
+            {% if user.is_student %}
+                <a href="" class="btn btn-primary w-100 mb-3">Submit</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

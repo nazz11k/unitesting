@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3 class="text-dark mb-4">Course Detail</h3>
+    <div class="card shadow mb-4 w-100">
+        <div class="card-header py-3">
+            <h4 class="text-primary fw-bold">{{ course.name }}</h4>
+            <h6 class="text fw-bold">Teacher: {{ course.teacher }}</h6>
+        </div>
+        <div class="card-body">
+            <p class="text-black">{{ course.description }}</p>
+        </div>
+        {% if user.is_teacher %}
+            <div class="card-footer">
+                <a href="{% url 'course_update' course.id %}" class="btn btn-primary w-100 mb-3">Update</a>
+                <form method="post" action="{% url 'course_delete' course.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger w-100 mb-3" type="submit">
+                        DELETE
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4 class="text-secondary mb-4">Lectures</h4>
+            {% if user.is_teacher %}
+                <a href="{% url 'lecture_create' course.id %}" class="btn btn-primary w-100 mb-3">Create Lecture</a>
+            {% endif %}
+            {% for lecture in lectures %}
+                <a href="{% url 'lecture_detail' lecture.id %}">
+                    <div class="card mb-4 border-primary">
+                        <div class="card-header py-3">
+                            <h4 class="text-primary fw-bold">{{ lecture.name }}</h4>
+                            <h6 class="text-secondary">{{ lecture.timestamp }}</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-black">{{ lecture.description }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h4 class="text-secondary mb-4">Tasks</h4>
+            {% if user.is_teacher %}
+                <a href="{% url 'task_create' course.id %}" class="btn btn-primary w-100 mb-3">Create Task</a>
+            {% endif %}
+            {% for task in tasks %}
+                <a href="{% url 'task_detail' task.id %}">
+                    <div class="card mb-4 border-primary">
+                        <div class="card-header py-3">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="text-primary fw-bold">{{ task.name }}</h4>
+                                    <h6 class="text-secondary">{{ task.timestamp }}</h6>
+                                </div>
+                                <div class="col text-end">
+                                    <h4 class="text-primary fw-bold">Max score: {{ task.max_score }}</h4>
+                                    <h6 class="text-secondary">Deadline: {{ task.deadline }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-black">{{ task.description }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="text-dark mb-4">Courses</h3>
+    {% if user.is_teacher %}
+        <div class="card shadow mb-4 w-50">
+            <div class="card-header py-3">
+                <h4 class="text-primary fw-bold">Create Course</h4>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'course_create' %}" class="btn btn-primary w-100">Create</a>
+            </div>
+        </div>
+    {% endif %}
+    {% for course in courses %}
+        <a href="{% url 'course_detail' course.id %}" class="text-decoration-none">
+            <div class="card shadow mb-4 w-50">
+                <div class="card-header py-3">
+                    <h4 class="text-primary fw-bold">{{ course.name }}</h4>
+                    <h6 class="text fw-bold">Teacher: {{ course.teacher }}</h6>
+                </div>
+                <div class="card-body">
+                    <p class="text-black">{{ course.description }}</p>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

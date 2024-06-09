@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3 class="text-dark mb-4">Profile</h3>
+   <div class="row mb-3">
+       <div class="col-lg-8">
+           <div class="row">
+               <div class="col">
+                   <div class="card shadow mb-3">
+                       <div class="card-header py-3">
+                           <p class="text-primary m-0 fw-bold">User Data ({{ user_type }})</p>
+                       </div>
+                       <div class="card-body">
+                           {% if user_type == 'student' %}
+                           <div class="row">
+                               <div class="col-2">
+                                   <p class="text-black fw-bold">Group:</p>
+                               </div>
+                               <div class="col">
+                                   <p class="text-black">{{ info.group }}</p>
+                               </div>
+                           </div>
+                           {% endif %}
+                           <div class="row">
+                               <div class="col-2">
+                                   <p class="text-black fw-bold">First Name:</p>
+                               </div>
+                               <div class="col">
+                                   <p class="text-black">{{ user.first_name }}</p>
+                               </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-2">
+                                   <p class="text-black fw-bold">Last Name:</p>
+                               </div>
+                               <div class="col">
+                                   <p class="text-black">{{ user.last_name }}</p>
+                               </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-2">
+                                   <p class="text-black fw-bold">Email:</p>
+                               </div>
+                               <div class="col">
+                                   <p class="text-black">{{ user.email }}</p>
+                               </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-2">
+                                   <p class="text-black fw-bold">Username:</p>
+                               </div>
+                               <div class="col">
+                                   <p class="text-black">{{ user.username }}</p>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col">
+                           <div class="card shadow">
+                               <div class="card-header py-3">
+                                   <p class="text-primary m-0 fw-bold">Contact Data</p>
+                               </div>
+                               <div class="card-body">
+                                   <div class="row">
+                                       <div class="col">
+                                           <p class="text-black fw-bold">Phone:</p>
+                                       </div>
+                                       <div class="col">
+                                           <p class="text-black">{{ personal_data.phone }}</p>
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col">
+                                           <p class="text-black fw-bold">Contact Mail:</p>
+                                       </div>
+                                       <div class="col">
+                                           <p class="text-black">{{ personal_data.contact_email }}</p>
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col">
+                                           <p class="text-black fw-bold">Telegram:</p>
+                                       </div>
+                                       <div class="col">
+                                           <p class="text-black">{{ personal_data.telegram }}</p>
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="text-center">
+                                           <a class="btn btn-primary d-block btn-user w-100" role="button" href="{% url 'personal_data' %}">Edit</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="col-lg-4">
+           <div class="card shadow mb-4">
+               <div class="card-header py-3">
+                   <h6 class="text-primary fw-bold m-0">Courses</h6>
+               </div>
+               <div class="card-body">
+                   {% for course in courses %}
+                       <div class="card mb-3">
+                           <div class="card-header py-3">
+                               <h5 class="text-black fw-bold">{{ course.name }}</h5>
+                               <h6 class="text-primary fw-bold">Teacher: {{ course.teacher }}</h6>
+                           </div>
+                           <div class="card-body">
+                               <p class="text-black">{{ course.description }}</p>
+                           </div>
+                       </div>
+
+                   {% endfor %}
+               </div>
+           </div>
+       </div>
+   </div>
+{% endblock %}

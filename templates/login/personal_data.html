@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3 class="text-dark mb-4">Personal Data Form</h3>
+    <div class="card shadow mb-3">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">Form</p>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label text-bg-light">Phone</label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-bg-light">Contact Mail</label>
+                            {{ form.contact_email }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-bg-light">Telegram</label>
+                            {{ form.telegram }}
+                        </div>
+                        {% if form.errors %}
+                            {% for field, message in form.errors.items %}
+                                <div class="text-center mt-3">
+                                    <p class="text-danger">{{ field }} - {{ message }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="text-center">
+                            <button class="btn btn-primary d-block btn-user w-100" type="submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
